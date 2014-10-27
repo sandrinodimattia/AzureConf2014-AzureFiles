@@ -1,0 +1,32 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>Enterprise Pics</h1>
+    <p class="lead">Enterprise Pics allows you to share your pictures with your co-workers.</p>
+</div>
+
+@if (ViewBag.Message != null)
+{
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="alert alert-success">
+                <strong>Success</strong> @ViewBag.Message
+            </div>
+        </div>
+    </div>
+}
+
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="alert alert-danger">
+                <strong>Error</strong> @ViewBag.ErrorMessage
+            </div>
+        </div>
+    </div>
+}
+
+@Html.Action("Overview", "Pictures")

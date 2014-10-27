@@ -1,0 +1,65 @@
+﻿@model EnterprisePics.Web.Model.PicturesOverviewModel
+
+
+@if (Model.ErrorMessage != null)
+{
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="alert alert-danger">
+                <strong>Error</strong> @Model.ErrorMessage
+            </div>
+        </div>
+    </div>
+}
+
+<div class="row">
+    <div class="col-xs-12">
+        <a href="#" data-toggle="modal" class="btn btn-primary" data-target="#modal-picture-upload" data-remote="@Url.Action("Upload", "Pictures")" style="margin-bottom: 20px;">
+            Upload Picture
+        </a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12">
+        <table class="table table-bordered table-condensed table-hover table-striped">
+            <tr>
+                <th>Directory</th>
+                <th>File</th>
+                <th>Modified On</th>
+            </tr>
+
+            @if (Model.Items != null && Model.Items.Any())
+            {
+                var i = 0;
+                foreach (var item in Model.Items)
+                {
+                    <tr>
+                        <td>@item.Directory.Name</td>
+                        <td><a data-toggle="modal" href="@Url.Action("Display", "Pictures", new { fileName = item.Name, directory = item.Directory.Name })" 
+                               data-target="#modal-picture-@i" data-remote="@Url.Action("Display", "Pictures", new { fileName = item.Name, directory = item.Directory.Name })">@item.Name</a></td>
+                        <td>@item.LastWriteTimeUtc</td>
+                        <div id="modal-picture-@i" class="modal" tabindex="-1" role="dialog" aria-hidden="true"></div>
+                    </tr>
+
+                    i++;
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="3">
+                        There are no pictures available. Start by adding a picture!
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12">
+        <a href="#" data-toggle="modal" class="btn btn-primary" data-target="#modal-picture-upload" data-remote="@Url.Action("Upload", "Pictures")">Upload Picture</a>
+        <div id="modal-picture-upload" class="modal" tabindex="-1" role="dialog" aria-hidden="true"></div>
+    </div>
+</div>
